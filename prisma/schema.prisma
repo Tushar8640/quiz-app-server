@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//-----user
+model User {
+  id           String        @id @default(uuid())
+  name         String
+  email        String        @unique
+  password     String
+  role         USER_ROLE?    @default(performer)
+  contactNo    String
+  address      String
+  profileImg   String
+  quizSessions QuizSession[]
+
+  @@map("users")
+}
+
+//----category
+model Category {
+  id    String @id @default(uuid())
+  title String
+  quiz  Quiz[]
+
+  @@map("categories")
+}
+
+//---Quiz
+model Quiz {
+  id            String        @id @default(uuid())
+  title         String
+  questions     Question[]
+  quizSessions  QuizSession[]
+  categoryId    String
+  quizSessionId String        @unique
+  category      Category      @relation(fields: [categoryId], references: [id])
+
+  @@map("quizes")
+}
+
+//-----QuizSession
+model QuizSession {
+  id         String @id @default(uuid())
+  performer  String
+  start_time String
+  end_time   String
+  score      Int
+  quizId     String
+  user       User   @relation(fields: [performer], references: [id])
+  quiz       Quiz   @relation(fields: [quizId], references: [id])
+
+  @@map("quizSessions")
+}
+
+//-----question
+model Question {
+  id              String          @id @default(uuid())
+  question_text   String
+  correct_answers CorrectAnswer[]
+  options         Option[]
+  marks           Int
+  multiple        Boolean         @default(true)
+  quizId          String
+  quiz            Quiz            @relation(fields: [quizId], references: [id])
+
+  @@map("questions")
+}
+
+//----correct answer
+model CorrectAnswer {
+  id         String   @id @default(uuid())
+  answer     String
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id])
+
+  @@map("correctAnswers")
+}
+
+//----options
+model Option {
+  id         String   @id @default(uuid())
+  option     String
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id])
+
+  @@map("options")
+}
+
+////------enums
+enum USER_ROLE {
+  admin
+  performer
+}
