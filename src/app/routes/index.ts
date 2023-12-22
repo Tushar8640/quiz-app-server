@@ -17,7 +17,7 @@ const moduleRoutes = [
   {path: "/questions", route: QuestionRoutes},
   {path: "/options", route: OptionRoutes},
   {path: "/answers", route: AnswerRoutes},
-  {path: "/qizes", route: QuizRoutes},
+  {path: "/quizzes", route: QuizRoutes},
   {path: "/sessions", route: QuizSessionRoutes},
 ];
 moduleRoutes.forEach((route) => router.use(route.path, route.route));

@@ -15,6 +15,7 @@ export const createQuizSessionZodSchema = z.object({
     }),
   }),
 });
+
 export const updateQuizSessionZodSchema = z.object({
   headers: z.object({
     authorization: z.string().nonempty({

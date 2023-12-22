@@ -1,7 +1,7 @@
-import {Quiz} from "@prisma/client";
+import { Quiz } from "@prisma/client";
 import httpStatus from "http-status";
 import prisma from "../../../shared/prisma";
-import {ApiError} from "../../../handleErrors/ApiError";
+import { ApiError } from "../../../handleErrors/ApiError";
 //create quiz
 export const createQuizService = async (payload: Quiz): Promise<Quiz> => {
   const quiz = await prisma.quiz.create({
@@ -19,7 +19,9 @@ export const getAllQuizService = async (): Promise<Quiz[]> => {
   return quizes;
 };
 //get all quiz by category
-export const getQuizByCategoryService = async (categoryId: string): Promise<Quiz[]> => {
+export const getQuizByCategoryService = async (
+  categoryId: string
+): Promise<Quiz[]> => {
   const quizes = await prisma.quiz.findMany({
     where: {
       categoryId,
@@ -31,10 +33,15 @@ export const getQuizByCategoryService = async (categoryId: string): Promise<Quiz
   return quizes;
 };
 //get single quiz
-export const getSingleQuizService = async (id: string): Promise<Quiz | null> => {
+export const getSingleQuizService = async (
+  id: string
+): Promise<Quiz | null> => {
   const quiz = await prisma.quiz.findUnique({
     where: {
       id,
+    },
+    include: {
+      questions: true,
     },
   });
 
@@ -45,7 +52,10 @@ export const getSingleQuizService = async (id: string): Promise<Quiz | null> => 
   return quiz;
 };
 //update option
-export const updateQuizService = async (id: string, payload: Partial<Quiz>): Promise<Quiz | null> => {
+export const updateQuizService = async (
+  id: string,
+  payload: Partial<Quiz>
+): Promise<Quiz | null> => {
   const quiz = await prisma.quiz.findUnique({
     where: {
       id,

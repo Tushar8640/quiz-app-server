@@ -5,7 +5,7 @@ import {createQuizService, deleteQuizService, getAllQuizService, getQuizByCatego
 
 export const createQuiz = catchAsync(async (req, res) => {
   const quiz = await createQuizService(req.body);
-
+console.log("bodysasfdaijk",quiz);
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,

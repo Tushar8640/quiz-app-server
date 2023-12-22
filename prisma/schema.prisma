@@ -41,7 +41,6 @@ model Quiz {
   questions     Question[]
   quizSessions  QuizSession[]
   categoryId    String
-  quizSessionId String        @unique
   category      Category      @relation(fields: [categoryId], references: [id])
 
   @@map("quizes")
@@ -67,7 +66,7 @@ model Question {
   question_text   String
   correct_answers CorrectAnswer[]
   options         Option[]
-  marks           Int
+  marks           Int             @default(1)
   multiple        Boolean         @default(true)
   quizId          String
   quiz            Quiz            @relation(fields: [quizId], references: [id])

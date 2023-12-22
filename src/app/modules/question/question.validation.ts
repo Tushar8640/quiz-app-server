@@ -13,10 +13,7 @@ export const createQuestionZodSchema = z.object({
       }),
       correct_answers: z.array(z.string()).optional(),
       options: z.array(z.string()).optional(),
-      marks: z.number({required_error: "marks is required"}),
-      categoryId: z.string().nonempty({
-        message: "Category Id is required",
-      }),
+      marks: z.number({required_error: "marks is required"}).optional(),
       quizId: z.string().nonempty({
         message: "quizId Id is required",
       }),
