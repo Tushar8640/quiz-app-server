@@ -5,7 +5,7 @@ import {createUserZodSchema, loginZodSchema, refreshTokenZodSchema} from "./auth
 const router = express.Router();
 //
 router.post("/signup", validateRequest(createUserZodSchema), createUser);
-router.post("/login", validateRequest(loginZodSchema), loginUser);
+router.post("/signin", validateRequest(loginZodSchema), loginUser);
 router.post("/refresh-token", validateRequest(refreshTokenZodSchema), refreshToken);
 //
 export const AuthRoutes = router;

@@ -1,33 +1,33 @@
 import {z} from "zod";
 
-export const createAnswerZodSchema = z.object({
+export const createQuizZodSchema = z.object({
   headers: z.object({
     authorization: z.string().nonempty({
       message: "Authorization is required",
     }),
   }),
   body: z.object({
-    answer: z.string().nonempty({
-      message: "answer is required",
+    title: z.string().nonempty({
+      message: "title is required",
     }),
-    questionId: z.string().nonempty({
-      message: "questionId is required",
+    categoryId: z.string().nonempty({
+      message: "categoryId is required",
     }),
   }),
 });
-export const updateAnswerZodSchema = z.object({
+export const updateQuizZodSchema = z.object({
   headers: z.object({
     authorization: z.string().nonempty({
       message: "Authorization is required",
     }),
   }),
   body: z.object({
-    answer: z.string().optional(),
-    questionId: z.string().optional(),
+    title: z.string().optional(),
+    categoryId: z.string().optional(),
   }),
 });
 
-export const deleteAnswerZodSchema = z.object({
+export const deleteQuizZodSchema = z.object({
   headers: z.object({
     authorization: z.string().nonempty({
       message: "Authorization is required",

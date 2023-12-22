@@ -17,6 +17,9 @@ export const createQuestionZodSchema = z.object({
       categoryId: z.string().nonempty({
         message: "Category Id is required",
       }),
+      quizId: z.string().nonempty({
+        message: "quizId Id is required",
+      }),
       multiple: z.boolean().default(true),
     })
     .strict(),
@@ -35,7 +38,8 @@ export const updateQuestionZodSchema = z.object({
       options: z.array(z.string()).optional(),
       marks: z.number().optional(),
       multiple: z.boolean().optional(),
-      categoryId: z.string().nonempty().optional(),
+      categoryId: z.string().optional(),
+      quizId: z.string().optional(),
     })
     .strict(),
 });
