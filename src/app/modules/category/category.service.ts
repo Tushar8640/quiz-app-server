@@ -1,9 +1,11 @@
-import {Category} from "@prisma/client";
+import { Category } from "@prisma/client";
 import httpStatus from "http-status";
 import prisma from "../../../shared/prisma";
-import {ApiError} from "../../../handleErrors/ApiError";
+import { ApiError } from "../../../handleErrors/ApiError";
 //create category
-export const createCategoryService = async (payload: Category): Promise<Category> => {
+export const createCategoryService = async (
+  payload: Category
+): Promise<Category> => {
   const category = await prisma.category.create({
     data: payload,
   });
@@ -11,21 +13,16 @@ export const createCategoryService = async (payload: Category): Promise<Category
 };
 //get all category
 export const getAllCategorieService = async (): Promise<Category[]> => {
-  const categories = await prisma.category.findMany({
-    include: {
-      questions: true,
-    },
-  });
+  const categories = await prisma.category.findMany({});
   return categories;
 };
 //get single category
-export const getSingleCategoryService = async (id: string): Promise<Category | null> => {
+export const getSingleCategoryService = async (
+  id: string
+): Promise<Category | null> => {
   const category = await prisma.category.findUnique({
     where: {
       id,
-    },
-    include: {
-      questions: true,
     },
   });
 
@@ -36,7 +33,10 @@ export const getSingleCategoryService = async (id: string): Promise<Category | n
   return category;
 };
 //update category
-export const updateCategoryService = async (id: string, payload: Partial<Category>): Promise<Category | null> => {
+export const updateCategoryService = async (
+  id: string,
+  payload: Partial<Category>
+): Promise<Category | null> => {
   const category = await prisma.category.findUnique({
     where: {
       id,
@@ -57,7 +57,9 @@ export const updateCategoryService = async (id: string, payload: Partial<Categor
   return updatedCategory;
 };
 //delete category
-export const deleteCategoryService = async (id: string): Promise<Category | null> => {
+export const deleteCategoryService = async (
+  id: string
+): Promise<Category | null> => {
   const category = await prisma.category.findUnique({
     where: {
       id,

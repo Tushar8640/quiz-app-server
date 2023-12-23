@@ -1,9 +1,11 @@
-import {Prisma, Question} from "@prisma/client";
+import { Prisma, Question } from "@prisma/client";
 import prisma from "../../../shared/prisma";
-import {ApiError} from "../../../handleErrors/ApiError";
+import { ApiError } from "../../../handleErrors/ApiError";
 import httpStatus from "http-status";
 //create question
-export const createQuestionService = async (payload: Question): Promise<Question> => {
+export const createQuestionService = async (
+  payload: Question
+): Promise<Question> => {
   const question = await prisma.question.create({
     data: payload,
   });
@@ -11,12 +13,19 @@ export const createQuestionService = async (payload: Question): Promise<Question
 };
 //get all question
 export const getAllQuestionService = async (): Promise<Question[]> => {
-  const questions = await prisma.question.findMany({});
+  const questions = await prisma.question.findMany({
+    include: {
+      options: true,
+      correct_answers: true,
+    },
+  });
 
   return questions;
 };
 //get questions by category
-export const getQuestionByCategoryService = async (categoryId: string): Promise<Question[]> => {
+export const getQuestionByCategoryService = async (
+  categoryId: string
+): Promise<Question[]> => {
   const books = await prisma.question.findMany({
     where: {
       categoryId,
@@ -28,7 +37,9 @@ export const getQuestionByCategoryService = async (categoryId: string): Promise<
   return books;
 };
 //get single question
-export const getSingleQuestionService = async (id: string): Promise<Question | null> => {
+export const getSingleQuestionService = async (
+  id: string
+): Promise<Question | null> => {
   const question = await prisma.question.findUnique({
     where: {
       id,
@@ -45,7 +56,10 @@ export const getSingleQuestionService = async (id: string): Promise<Question | n
   return question;
 };
 //update question
-export const updateQuestionService = async (id: string, payload: Partial<Question>): Promise<Question | null> => {
+export const updateQuestionService = async (
+  id: string,
+  payload: Partial<Question>
+): Promise<Question | null> => {
   const question = await prisma.question.findUnique({
     where: {
       id,
@@ -66,7 +80,9 @@ export const updateQuestionService = async (id: string, payload: Partial<Questio
   return updatedQuestion;
 };
 //delete question
-export const deleteQuestionService = async (id: string): Promise<Question | null> => {
+export const deleteQuestionService = async (
+  id: string
+): Promise<Question | null> => {
   const question = await prisma.question.findUnique({
     where: {
       id,

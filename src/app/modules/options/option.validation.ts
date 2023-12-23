@@ -15,6 +15,7 @@ export const createOptionZodSchema = z.object({
     }),
   }),
 });
+
 export const updateOptionZodSchema = z.object({
   headers: z.object({
     authorization: z.string().nonempty({

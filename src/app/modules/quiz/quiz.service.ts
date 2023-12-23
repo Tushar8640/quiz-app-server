@@ -14,6 +14,7 @@ export const getAllQuizService = async (): Promise<Quiz[]> => {
   const quizes = await prisma.quiz.findMany({
     include: {
       category: true,
+      questions: true,
     },
   });
   return quizes;
@@ -41,7 +42,12 @@ export const getSingleQuizService = async (
       id,
     },
     include: {
-      questions: true,
+      questions: {
+        include: {
+          options: true,
+          correct_answers: true,
+        },
+      },
     },
   });
 
